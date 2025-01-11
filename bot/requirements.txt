@@ -1,0 +1,25 @@
+# Основные
+python-telegram-bot[job-queue]==20.7
+python-dotenv==1.0.0
+redis==5.0.1
+sqlalchemy==2.0.25
+nest_asyncio
+fastapi
+uvicorn
+requests
+APScheduler>=3.6.3
+
+# AI/ML
+transformers==4.36.2
+torch==2.1.2
+easyocr==1.7.1
+sentencepiece==0.1.99
+tokenizers==0.15.0
+
+# Google API
+google-api-python-client==2.108.0
+google-auth-httplib2==0.1.1
+google-auth-oauthlib==1.2.0
+
+# Утилиты
+pandas==2.1.4

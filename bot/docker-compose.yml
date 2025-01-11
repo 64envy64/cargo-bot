@@ -1,0 +1,46 @@
+services:
+  silkway-bot:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: silkway-bot
+    env_file:
+      - .env
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=sqlite:///data/bot.db
+      - PYTHONPATH=/app
+    volumes:
+      - ./app:/app/app
+      - ./data:/app/data:rw
+    command: ["python", "-u", "app/run.py"]
+    networks:
+      - mynet
+    ports:
+      - "8001:8000"
+    hostname: silkway-bot
+
+  admin-bot:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: admin-bot
+    env_file:
+      - .env
+    environment:
+      - ADMIN_BOT_TOKEN=${ADMIN_BOT_TOKEN}
+      - SECRET_KEY=${SECRET_KEY}
+      - MAIN_BOT_URL=http://silkway-bot:8000
+      - DATABASE_URL=sqlite:///data/bot.db
+      - PYTHONPATH=/app
+    volumes:
+      - ./app:/app/app
+      - ./data:/app/data:rw
+    command: ["python", "-u", "app/admin_bot/main.py"]
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
